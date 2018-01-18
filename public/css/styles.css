@@ -1,0 +1,39 @@
+.top-questions-stats {
+    text-align: center;
+}
+
+.borderless td, .borderless th {
+    border: none !important;
+}
+
+.asked, .float-right {
+    float: right;
+}
+
+#form-title, .align-center {
+    text-align: center;;
+}
+
+.or {
+    text-align: center;
+    color: gray;
+}
+
+.nav-icons {
+    color: gray;
+    padding-right: 10px;
+}
+
+.nav-text {
+    text-decoration: none;
+    color: white;
+    padding-right: 10px;
+}
+
+.navbar-brand {
+    margin-left: 20px;
+}
+
+.navbar {
+    border-radius: 0;
+}
