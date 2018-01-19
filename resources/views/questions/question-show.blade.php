@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-2">
             <div class="col-md-2">
-                <show-question></show-question>
+                <show-question id="{{$question->id}}"></show-question>
             </div>
         </div>
         <div class="col-md-10">

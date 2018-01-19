@@ -43073,6 +43073,10 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
 //
 //
 //
@@ -43091,9 +43095,70 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id'],
+    data: function data() {
+        return {
+            upvoted: false,
+            downvoted: false,
+            favorited: false
+        };
+    },
     mounted: function mounted() {
-        console.info('Component mounted.');
+        this.check_favorite();
+    },
+
+    methods: {
+        upvote: function upvote() {
+            //                axios.post('/upvote')
+            //                    .then(res => {
+            //                        console.log(res);
+            //                    })
+            //                    .catch(err => {
+            //                        console.log(err);
+            //                    });
+        },
+        check_favorite: function check_favorite() {
+            var _this = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/check_favorite/' + this.id).then(function (res) {
+                if (res.data.status === 'ok' && res.data.favorite === true) {
+                    _this.favorited = true;
+                }
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
+        starred: function starred() {
+            if (!this.favorited) {
+                this.favorite();
+            } else {
+                this.unfavorite();
+            }
+        },
+        favorite: function favorite() {
+            var _this2 = this;
+
+            console.log('favorite');
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/favorite', { question_id: this.id }).then(function (res) {
+                console.log(res);
+                _this2.favorited = true;
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
+        unfavorite: function unfavorite() {
+            var _this3 = this;
+
+            console.log('unfavorite');
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/unfavorite', { question_id: this.id }).then(function (res) {
+                console.log(res);
+                _this3.favorited = false;
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
     }
 });
 
@@ -43105,50 +43170,46 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("form", { attrs: { action: "", method: "post" } }, [
-        _c("input", {
-          staticClass: "hidden",
-          attrs: { type: "hidden", value: "" }
+  return _c("div", [
+    _c("form", { attrs: { action: "", method: "post" } }, [
+      _c("input", {
+        staticClass: "hidden",
+        attrs: { type: "hidden", value: "" }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "upvote", attrs: { id: "topic" } }, [
+        _c("a", {
+          staticClass: "upvote up",
+          attrs: {
+            title: "This is good stuff. Vote it up! (Click again to undo)"
+          },
+          on: { click: _vm.upvote }
         }),
         _vm._v(" "),
-        _c("div", { staticClass: "upvote", attrs: { id: "topic" } }, [
-          _c("a", {
-            staticClass: "upvote up upvoted",
-            attrs: {
-              title: "This is good stuff. Vote it up! (Click again to undo)"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "span",
-            { staticClass: "count", attrs: { id: "count", name: "vote" } },
-            [_vm._v(" 33")]
-          ),
-          _vm._v(" "),
-          _c("a", {
-            staticClass: "downvote downvoted",
-            attrs: {
-              title: "This is not useful. Vote it down. (Click again to undo)"
-            }
-          }),
-          _vm._v(" "),
-          _c("a", {
-            staticClass: "star starred",
-            attrs: { title: "Mark as favorite. (Click again to undo)" }
-          })
-        ])
+        _c(
+          "span",
+          { staticClass: "count", attrs: { id: "count", name: "vote" } },
+          [_vm._v(" 33")]
+        ),
+        _vm._v(" "),
+        _c("a", {
+          staticClass: "downvote",
+          attrs: {
+            title: "This is not useful. Vote it down. (Click again to undo)"
+          }
+        }),
+        _vm._v(" "),
+        _c("a", {
+          staticClass: "star",
+          class: { starred: _vm.favorited },
+          attrs: { title: "Mark as favorite. (Click again to undo)" },
+          on: { click: _vm.starred }
+        })
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

@@ -3,12 +3,14 @@
         <form action="" method="post">
             <input type="hidden" class="hidden" value=""/>
             <div id="topic" class="upvote">
-                <a class="upvote up upvoted"
-                   title="This is good stuff. Vote it up! (Click again to undo)"></a>
-                <span class="count" id="count" name="vote">&nbsp;33</span>
-                <a class="downvote downvoted" title="This is not useful. Vote it down. (Click again to undo)">
+                <a @click="upvote" class="upvote up" title="This is good stuff. Vote it up! (Click again to undo)">
+
                 </a>
-                <a class="star starred" title="Mark as favorite. (Click again to undo)">
+                <span class="count" id="count" name="vote">&nbsp;33</span>
+                <a class="downvote" title="This is not useful. Vote it down. (Click again to undo)">
+                </a>
+                <a class="star" :class="{starred: favorited}" @click="starred"
+                   title="Mark as favorite. (Click again to undo)">
                 </a>
             </div>
         </form>
@@ -16,9 +18,69 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
+        props: ['id'],
+        data() {
+            return {
+                upvoted: false,
+                downvoted: false,
+                favorited: false
+            }
+        },
         mounted() {
-            console.info('Component mounted.')
+            this.check_favorite();
+        },
+        methods: {
+            upvote() {
+//                axios.post('/upvote')
+//                    .then(res => {
+//                        console.log(res);
+//                    })
+//                    .catch(err => {
+//                        console.log(err);
+//                    });
+            },
+            check_favorite() {
+                axios.get(`/check_favorite/${this.id}`).then(res => {
+                        if(res.data.status === 'ok' && res.data.favorite === true) {
+                            this.favorited = true;
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
+            },
+            starred() {
+                if (!this.favorited) {
+                    this.favorite();
+                }
+                else {
+                    this.unfavorite();
+                }
+            },
+            favorite() {
+                console.log('favorite');
+                axios.post('/favorite', {question_id: this.id})
+                    .then(res => {
+                        console.log(res);
+                        this.favorited = true;
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
+            },
+            unfavorite() {
+                console.log('unfavorite');
+                axios.post('/unfavorite', {question_id: this.id})
+                    .then(res => {
+                        console.log(res);
+                        this.favorited = false;
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
+            }
         }
     }
 </script>

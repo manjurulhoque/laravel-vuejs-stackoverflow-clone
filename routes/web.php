@@ -20,6 +20,14 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('questions', 'QuestionController');
+
+    // voting
+    Route::post('upvote', 'VoteController@upvote')->name('upvote');
+
+    // favorite
+    Route::post('favorite', 'VoteController@favorite')->name('favorite');
+    Route::post('unfavorite', 'VoteController@unfavorite')->name('unfavorite');
+    Route::get('check_favorite/{check_favorite}', 'VoteController@check_favorite')->name('check_favorite');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
