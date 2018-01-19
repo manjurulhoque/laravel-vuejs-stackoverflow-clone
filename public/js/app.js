@@ -43143,7 +43143,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log('favorite');
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/favorite', { question_id: this.id }).then(function (res) {
                 console.log(res);
-                _this2.favorited = true;
+                if (res.data.status === 'success') {
+                    _this2.favorited = true;
+                }
             }).catch(function (err) {
                 console.log(err);
             });

@@ -22,13 +22,13 @@ class VoteController extends Controller
 
     public function favorite(Request $request)
     {
-        $v = $this->vote::find($request->question_id);
+        $v = $this->vote::where('question_id', $request->question_id)
+            ->where('user_id', Auth::id())->first();
         if ($v) {
             $v->favorite = true;
 
             $v->save();
-        }
-        else {
+        } else {
             $this->vote->user_id = Auth::id();
             $this->vote->favorite = true;
             $this->vote->question_id = $request->question_id;
@@ -40,7 +40,8 @@ class VoteController extends Controller
 
     public function unfavorite(Request $request)
     {
-        $v = $this->vote::find($request->question_id);
+        $v = $this->vote::where('question_id', $request->question_id)
+                        ->where('user_id', Auth::id())->first();
         if ($v) {
             $v->favorite = false;
 
@@ -51,19 +52,17 @@ class VoteController extends Controller
 
     public function check_favorite($question_id)
     {
-        $v = $this->vote::find($question_id);
+        $v = $this->vote::where('question_id', $question_id)
+                        ->where('user_id', Auth::id())->first();
 
-        if($v) {
-            if($v->user_id == Auth::id() && $v->favorite == false) {
+        if ($v) {
+            if ($v->user_id == Auth::id() && $v->favorite == false) {
                 return response()->json(['status' => 'ok', 'favorite' => false]);
-            }
-            else {
-                if($v->user_id == Auth::id() && $v->favorite == true) {
-                    return response()->json(['status' => 'ok', 'favorite' => true]);
-                }
+            } else if ($v->user_id == Auth::id() && $v->favorite == true) {
+                return response()->json(['status' => 'ok', 'favorite' => true]);
             }
         }
-        return response()->json(['status' => 'failed']);
 
+        return response()->json(['status' => 'failed']);
     }
 }

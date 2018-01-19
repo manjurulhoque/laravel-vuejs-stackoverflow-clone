@@ -22,7 +22,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = $this->question->all();
+        $questions = $this->question->with('votes')->all();
         return view('home', compact('questions'));
     }
 

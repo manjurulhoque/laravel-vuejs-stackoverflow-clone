@@ -42,8 +42,9 @@
 //                    });
             },
             check_favorite() {
-                axios.get(`/check_favorite/${this.id}`).then(res => {
-                        if(res.data.status === 'ok' && res.data.favorite === true) {
+                axios.get(`/check_favorite/${this.id}`)
+                    .then(res => {
+                        if (res.data.status === 'ok' && res.data.favorite === true) {
                             this.favorited = true;
                         }
                     })
@@ -64,7 +65,9 @@
                 axios.post('/favorite', {question_id: this.id})
                     .then(res => {
                         console.log(res);
-                        this.favorited = true;
+                        if (res.data.status === 'success') {
+                            this.favorited = true;
+                        }
                     })
                     .catch(err => {
                         console.log(err)
