@@ -95,6 +95,7 @@
 
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="https://bootswatch.com/3/cerulean/bootstrap.min.css">
+    @yield('stylesheet')
     <link rel="stylesheet" type="text/css" href="{{ asset("css/styles.css") }}">
     <link rel="stylesheet" type="text/css" href="{{ asset("css/jquery.upvote.css") }}">
 </head>

@@ -53,7 +53,9 @@
                                     <p class="top-questions-stats">views</p>
                                 </div>
                                 <div class="col-md-2">
-                                    <p>tags</p>
+                                    @foreach ($question->tags as $tag)
+                                        <span class="label label-success">{{ $tag->name }}</span>
+                                    @endforeach
                                 </div>
                                 <div class="col-md-7">
                                     <p class="asked">asked {{ $question->created_at->diffForHumans() }} {{ $question->user->name }}</p>

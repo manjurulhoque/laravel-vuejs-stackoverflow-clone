@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\QuestionCreateRequest;
 use App\Question;
+use App\Tag;
 use Illuminate\Http\Request;
 use Auth;
 
 class QuestionController extends Controller
 {
     private $question;
-    function __construct(Question $question)
+    private $tag;
+    function __construct(Question $question, Tag $tag)
     {
         $this->question = $question;
+        $this->tag = $tag;
     }
 
     /**
@@ -33,7 +36,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('questions.question-create');
+        $tags = $this->tag->all();
+        return view('questions.question-create', compact('tags'));
     }
 
     /**
@@ -50,6 +54,7 @@ class QuestionController extends Controller
         $this->question->slug = str_slug($request->get('title'));
 
         $this->question->save();
+        $this->question->tags()->sync($request->tags, false);
         return redirect('/');
     }
 
