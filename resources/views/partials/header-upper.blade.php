@@ -14,7 +14,7 @@
                 <a href="#" class="btn btn-default active" role="button">Users</a>
                 <a href="#" class="btn btn-default active" role="button">Badges</a>
                 <a href="#" class="btn btn-default active" role="button">Unanswered</a>
-                <a href="#" class="btn btn-default active" role="button">Ask Question</a>
+                <a href="{{ route('questions.create') }}" class="btn btn-default active" role="button">Ask Question</a>
             </button>
         </div>
     </div>

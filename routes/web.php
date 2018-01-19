@@ -12,9 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('questions', 'QuestionController');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');

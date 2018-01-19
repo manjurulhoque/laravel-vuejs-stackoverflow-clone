@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionCreateRequest;
 use App\Question;
 use Illuminate\Http\Request;
+use Auth;
 
 class QuestionController extends Controller
 {
+    private $question;
+    function __construct(Question $question)
+    {
+        $this->question = $question;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,18 +32,24 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        return view('questions.question-create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param QuestionCreateRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionCreateRequest $request)
     {
-        //
+        $this->question->title = $request->get('title');
+        $this->question->content = $request->get('content');
+        $this->question->user_id = Auth::id();
+        $this->question->slug = str_slug($request->get('title'));
+
+        $this->question->save();
+        return redirect('/');
     }
 
     /**
