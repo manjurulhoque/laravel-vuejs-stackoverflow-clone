@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    $questions = App\Question::all();
+    return view('home', compact('questions'));
 });
 
 Auth::routes();

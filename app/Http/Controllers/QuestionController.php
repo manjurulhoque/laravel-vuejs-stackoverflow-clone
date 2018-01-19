@@ -22,7 +22,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $questions = $this->question->all();
+        return view('home', compact('questions'));
     }
 
     /**
@@ -60,7 +61,7 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        return view('questions.question-show', compact('question'));
     }
 
     /**
