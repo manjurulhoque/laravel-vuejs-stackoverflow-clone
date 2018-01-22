@@ -27,7 +27,27 @@ class VoteController extends Controller
             $v->save();
         } else {
             $this->vote->user_id = Auth::id();
-            $this->vote->favorite = true;
+            $this->vote->upvote = true;
+            $this->vote->question_id = $request->question_id;
+
+            $this->vote->save();
+        }
+        return response()->json(['status' => $request->question_id]);
+    }
+
+    public function downvote(Request $request)
+    {
+        $v = $this->vote::where('question_id', $request->question_id)
+            ->where('user_id', Auth::id())->first();
+        if ($v) {
+            $v->upvote = false;
+            $v->downvote = true;
+            $v->user_id = Auth::id();
+            $v->question_id = $request->question_id;
+            $v->save();
+        } else {
+            $this->vote->user_id = Auth::id();
+            $this->vote->downvote = true;
             $this->vote->question_id = $request->question_id;
 
             $this->vote->save();

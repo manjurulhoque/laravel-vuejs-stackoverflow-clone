@@ -43080,6 +43080,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -43101,21 +43102,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             this.favorited = true;
-            console.log('upvote');
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/upvote', { question_id: this.id }).then(function (res) {
+                if (_this.downvoted === true) {
+                    _this.downvoted = false;
+                }
                 _this.upvoted = true;
             }).catch(function (err) {
                 console.log(err);
             });
         },
-        check_vote: function check_vote() {
+        downvote: function downvote() {
             var _this2 = this;
+
+            this.favorited = true;
+            console.log('downvote');
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/downvote', { question_id: this.id }).then(function (res) {
+                if (_this2.upvoted === true) {
+                    _this2.upvoted = false;
+                }
+                _this2.downvoted = true;
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
+        check_vote: function check_vote() {
+            var _this3 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/check_vote/' + this.id).then(function (res) {
                 var data = res.data;
                 if (data.status === 'ok') {
                     if (data.upvote === true && data.downvote === false) {
-                        _this2.upvoted = true;
+                        _this3.upvoted = true;
+                    } else if (data.upvote === false && data.downvote === true) {
+                        _this3.downvoted = true;
                     }
                 }
             }).catch(function (err) {
@@ -43123,11 +43142,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         check_favorite: function check_favorite() {
-            var _this3 = this;
+            var _this4 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/check_favorite/' + this.id).then(function (res) {
                 if (res.data.status === 'ok' && res.data.favorite === true) {
-                    _this3.favorited = true;
+                    _this4.favorited = true;
                 }
             }).catch(function (err) {
                 console.log(err);
@@ -43141,21 +43160,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         favorite: function favorite() {
-            var _this4 = this;
+            var _this5 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/favorite', { question_id: this.id }).then(function (res) {
                 if (res.data.status === 'success') {
-                    _this4.favorited = true;
+                    _this5.favorited = true;
                 }
             }).catch(function (err) {
                 console.log(err);
             });
         },
         unfavorite: function unfavorite() {
-            var _this5 = this;
+            var _this6 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/unfavorite', { question_id: this.id }).then(function (res) {
-                _this5.favorited = false;
+                _this6.favorited = false;
             }).catch(function (err) {
                 console.log(err);
             });
@@ -43196,9 +43215,11 @@ var render = function() {
         _vm._v(" "),
         _c("a", {
           staticClass: "downvote",
+          class: { downvoted: _vm.downvoted },
           attrs: {
             title: "This is not useful. Vote it down. (Click again to undo)"
-          }
+          },
+          on: { click: _vm.downvote }
         }),
         _vm._v(" "),
         _c("a", {

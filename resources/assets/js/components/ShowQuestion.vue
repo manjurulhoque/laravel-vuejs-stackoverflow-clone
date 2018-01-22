@@ -9,7 +9,8 @@
 
                 </a>
                 <span class="count" id="count" name="vote">&nbsp;33</span>
-                <a class="downvote" title="This is not useful. Vote it down. (Click again to undo)">
+                <a @click="downvote" :class="{downvoted: downvoted}" class="downvote"
+                   title="This is not useful. Vote it down. (Click again to undo)">
                 </a>
                 <a class="star" :class="{starred: favorited}" @click="starred"
                    title="Mark as favorite. (Click again to undo)">
@@ -37,10 +38,26 @@
         methods: {
             upvote() {
                 this.favorited = true;
-                console.log(`upvote`);
                 axios.post(`/upvote`, {question_id: this.id})
                     .then(res => {
+                        if (this.downvoted === true) {
+                            this.downvoted = false;
+                        }
                         this.upvoted = true;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+            downvote() {
+                this.favorited = true;
+                console.log(`downvote`);
+                axios.post(`/downvote`, {question_id: this.id})
+                    .then(res => {
+                        if (this.upvoted === true) {
+                            this.upvoted = false;
+                        }
+                        this.downvoted = true;
                     })
                     .catch(err => {
                         console.log(err);
@@ -53,6 +70,9 @@
                         if (data.status === 'ok') {
                             if (data.upvote === true && data.downvote === false) {
                                 this.upvoted = true;
+                            }
+                            else if (data.upvote === false && data.downvote === true) {
+                                this.downvoted = true;
                             }
                         }
                     })

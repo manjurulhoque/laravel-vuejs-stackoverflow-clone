@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
 
     // voting
     Route::post('upvote', 'VoteController@upvote')->name('upvote');
+    Route::post('downvote', 'VoteController@downvote')->name('downvote');
 
     // favorite
     Route::post('favorite', 'VoteController@favorite')->name('favorite');
