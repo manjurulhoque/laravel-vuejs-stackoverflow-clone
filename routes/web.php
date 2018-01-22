@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function ($router) {
     Route::resource('questions', 'QuestionController');
 
     // voting

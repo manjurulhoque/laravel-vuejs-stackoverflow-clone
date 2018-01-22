@@ -17,7 +17,22 @@ class VoteController extends Controller
 
     public function upvote(Request $request)
     {
-        return response()->json($request);
+        $v = $this->vote::where('question_id', $request->question_id)
+            ->where('user_id', Auth::id())->first();
+        if ($v) {
+            $v->upvote = true;
+            $v->downvote = false;
+            $v->user_id = Auth::id();
+            $v->question_id = $request->question_id;
+            $v->save();
+        } else {
+            $this->vote->user_id = Auth::id();
+            $this->vote->favorite = true;
+            $this->vote->question_id = $request->question_id;
+
+            $this->vote->save();
+        }
+        return response()->json(['status' => $request->question_id]);
     }
 
     public function favorite(Request $request)
@@ -41,7 +56,7 @@ class VoteController extends Controller
     public function unfavorite(Request $request)
     {
         $v = $this->vote::where('question_id', $request->question_id)
-                        ->where('user_id', Auth::id())->first();
+            ->where('user_id', Auth::id())->first();
         if ($v) {
             $v->favorite = false;
 
@@ -53,7 +68,23 @@ class VoteController extends Controller
     public function check_favorite($question_id)
     {
         $v = $this->vote::where('question_id', $question_id)
-                        ->where('user_id', Auth::id())->first();
+            ->where('user_id', Auth::id())->first();
+
+        if ($v) {
+            if ($v->user_id == Auth::id() && $v->favorite == false) {
+                return response()->json(['status' => 'ok', 'favorite' => false]);
+            } else if ($v->user_id == Auth::id() && $v->favorite == true) {
+                return response()->json(['status' => 'ok', 'favorite' => true]);
+            }
+        }
+
+        return response()->json(['status' => 'failed']);
+    }
+
+    public function check_vote($question_id)
+    {
+        $v = $this->vote::where('question_id', $question_id)
+            ->where('user_id', Auth::id())->first();
 
         if ($v) {
             if ($v->user_id == Auth::id() && $v->favorite == false) {

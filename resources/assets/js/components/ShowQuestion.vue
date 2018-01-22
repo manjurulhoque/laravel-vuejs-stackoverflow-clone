@@ -33,13 +33,18 @@
         },
         methods: {
             upvote() {
-//                axios.post('/upvote')
-//                    .then(res => {
-//                        console.log(res);
-//                    })
-//                    .catch(err => {
-//                        console.log(err);
-//                    });
+                this.favorited = true;
+                console.log(`upvote`);
+                axios.post(`/upvote`, {question_id: this.id})
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+            check_vote() {
+
             },
             check_favorite() {
                 axios.get(`/check_favorite/${this.id}`)
@@ -61,10 +66,8 @@
                 }
             },
             favorite() {
-                console.log('favorite');
                 axios.post('/favorite', {question_id: this.id})
                     .then(res => {
-                        console.log(res);
                         if (res.data.status === 'success') {
                             this.favorited = true;
                         }
@@ -74,10 +77,8 @@
                     });
             },
             unfavorite() {
-                console.log('unfavorite');
                 axios.post('/unfavorite', {question_id: this.id})
                     .then(res => {
-                        console.log(res);
                         this.favorited = false;
                     })
                     .catch(err => {
