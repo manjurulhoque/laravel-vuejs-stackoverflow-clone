@@ -43078,6 +43078,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -43090,26 +43092,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function mounted() {
+        this.check_vote();
         this.check_favorite();
     },
 
     methods: {
         upvote: function upvote() {
+            var _this = this;
+
             this.favorited = true;
             console.log('upvote');
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/upvote', { question_id: this.id }).then(function (res) {
-                console.log(res);
+                _this.upvoted = true;
             }).catch(function (err) {
                 console.log(err);
             });
         },
-        check_vote: function check_vote() {},
+        check_vote: function check_vote() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/check_vote/' + this.id).then(function (res) {
+                var data = res.data;
+                if (data.status === 'ok') {
+                    if (data.upvote === true && data.downvote === false) {
+                        _this2.upvoted = true;
+                    }
+                }
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
         check_favorite: function check_favorite() {
-            var _this = this;
+            var _this3 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/check_favorite/' + this.id).then(function (res) {
                 if (res.data.status === 'ok' && res.data.favorite === true) {
-                    _this.favorited = true;
+                    _this3.favorited = true;
                 }
             }).catch(function (err) {
                 console.log(err);
@@ -43123,21 +43141,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         favorite: function favorite() {
-            var _this2 = this;
+            var _this4 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/favorite', { question_id: this.id }).then(function (res) {
                 if (res.data.status === 'success') {
-                    _this2.favorited = true;
+                    _this4.favorited = true;
                 }
             }).catch(function (err) {
                 console.log(err);
             });
         },
         unfavorite: function unfavorite() {
-            var _this3 = this;
+            var _this5 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/unfavorite', { question_id: this.id }).then(function (res) {
-                _this3.favorited = false;
+                _this5.favorited = false;
             }).catch(function (err) {
                 console.log(err);
             });
@@ -43163,6 +43181,7 @@ var render = function() {
       _c("div", { staticClass: "upvote", attrs: { id: "topic" } }, [
         _c("a", {
           staticClass: "upvote up",
+          class: { upvoted: _vm.upvoted },
           attrs: {
             title: "This is good stuff. Vote it up! (Click again to undo)"
           },

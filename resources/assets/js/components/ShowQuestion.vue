@@ -3,7 +3,9 @@
         <form action="" method="post">
             <input type="hidden" class="hidden" value=""/>
             <div id="topic" class="upvote">
-                <a @click="upvote" class="upvote up" title="This is good stuff. Vote it up! (Click again to undo)">
+                <a @click="upvote"
+                   :class="{upvoted: upvoted}"
+                   class="upvote up" title="This is good stuff. Vote it up! (Click again to undo)">
 
                 </a>
                 <span class="count" id="count" name="vote">&nbsp;33</span>
@@ -29,6 +31,7 @@
             }
         },
         mounted() {
+            this.check_vote();
             this.check_favorite();
         },
         methods: {
@@ -37,14 +40,25 @@
                 console.log(`upvote`);
                 axios.post(`/upvote`, {question_id: this.id})
                     .then(res => {
-                        console.log(res);
+                        this.upvoted = true;
                     })
                     .catch(err => {
                         console.log(err);
                     });
             },
             check_vote() {
-
+                axios.get(`/check_vote/${this.id}`)
+                    .then(res => {
+                        let data = res.data;
+                        if (data.status === 'ok') {
+                            if (data.upvote === true && data.downvote === false) {
+                                this.upvoted = true;
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
             },
             check_favorite() {
                 axios.get(`/check_favorite/${this.id}`)

@@ -87,10 +87,12 @@ class VoteController extends Controller
             ->where('user_id', Auth::id())->first();
 
         if ($v) {
-            if ($v->user_id == Auth::id() && $v->favorite == false) {
-                return response()->json(['status' => 'ok', 'favorite' => false]);
-            } else if ($v->user_id == Auth::id() && $v->favorite == true) {
-                return response()->json(['status' => 'ok', 'favorite' => true]);
+            if ($v->upvote == true && $v->downvote == false) {
+                return response()->json(['status' => 'ok', 'upvote' => true, 'downvote' => false]);
+            } else if ($v->upvote == false && $v->downvote == true) {
+                return response()->json(['status' => 'ok', 'upvote' => false, 'downvote' => true]);
+            } else if ($v->upvote == false && $v->downvote == false) {
+                return response()->json(['status' => 'ok', 'upvote' => false, 'downvote' => false]);
             }
         }
 

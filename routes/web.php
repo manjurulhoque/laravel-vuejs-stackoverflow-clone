@@ -27,7 +27,8 @@ Route::group(['middleware' => 'auth'], function ($router) {
     // favorite
     Route::post('favorite', 'VoteController@favorite')->name('favorite');
     Route::post('unfavorite', 'VoteController@unfavorite')->name('unfavorite');
-    Route::get('check_favorite/{check_favorite}', 'VoteController@check_favorite')->name('check_favorite');
+    Route::get('check_favorite/{question_id}', 'VoteController@check_favorite')->name('check_favorite');
+    Route::get('check_vote/{question_id}', 'VoteController@check_vote')->name('check_vote');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
