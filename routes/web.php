@@ -20,6 +20,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function ($router) {
     Route::resource('questions', 'QuestionController');
+    Route::resource('replies', 'ReplyController');
 
     // voting
     Route::post('upvote', 'VoteController@upvote')->name('upvote');

@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    // eager loading
+    public $with = ['votes'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -19,5 +22,10 @@ class Question extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
     }
 }
