@@ -29,7 +29,7 @@
                                     <p class="top-questions-stats">0</p>
                                 </div>
                                 <div class="col-md-1">
-                                    <p class="top-questions-stats">1</p>
+                                    <p class="top-questions-stats">{{ $question->replies()->count() }}</p>
                                 </div>
                                 <div class="col-md-1">
                                     <p class="top-questions-stats">13</p>

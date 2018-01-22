@@ -13,20 +13,55 @@
             <div style="margin-top: 150px">
                 <h2>{{ $question->replies()->count() }} answer</h2>
 
-                <table class="table">
-                    <tbody>
-                    @foreach ($question->replies as $reply)
+                @foreach ($question->replies as $reply)
+                    <table class="table table-responsive">
+                        <tbody>
                         <tr>
-                            <td>{{ $reply->content }}</td>
+                            <td></td>
                             <td>
-                                answered {{ $reply->updated_at->diffForHumans() }}
-                                {{ $reply->user->name }}
+                                <div class="post-text">
+                                    {{ $reply->content }}
+                                </div>
+                                <table class="fw">
+                                    <tbody>
+                                    <tr>
+                                        <td align="right" class="post-signature">
+                                            <div class="user-info user-hover pull-right">
+                                                <div class="user-action-time">
+                                                    answered {{ $reply->updated_at->diffForHumans() }}
+                                                </div>
+                                                {{--<div class="user-gravatar32">--}}
+                                                    {{--<a href="/users/1461131/mersocarlin">--}}
+                                                        {{--<div class="gravatar-wrapper-32"><img--}}
+                                                                    {{--src="https://www.gravatar.com/avatar/9d345af079c0e2a554a586c6cad3c20c?s=32&amp;d=identicon&amp;r=PG"--}}
+                                                                    {{--alt="" width="32" height="32"></div>--}}
+                                                    {{--</a>--}}
+                                                {{--</div>--}}
+                                                <div class="user-details">
+                                                    <a href="#">{{ $reply->user->name }}</a>
+                                                    {{--<div class="-flair">--}}
+                                                        {{--<span class="reputation-score" title="reputation score "--}}
+                                                              {{--dir="ltr">3,835</span><span title="1 gold badge"><span--}}
+                                                                    {{--class="badge1"></span><span--}}
+                                                                    {{--class="badgecount">1</span></span><span--}}
+                                                                {{--title="8 silver badges"><span--}}
+                                                                    {{--class="badge2"></span><span--}}
+                                                                    {{--class="badgecount">8</span></span><span--}}
+                                                                {{--title="26 bronze badges"><span--}}
+                                                                    {{--class="badge3"></span><span--}}
+                                                                    {{--class="badgecount">26</span></span>--}}
+                                                    {{--</div>--}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </td>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-
+                        </tbody>
+                    </table>
+                @endforeach
                 <div class="col-md-8" style="margin-top: 30px">
                     <form action="{{ route('replies.store') }}" method="post">
                         {{ csrf_field() }}
