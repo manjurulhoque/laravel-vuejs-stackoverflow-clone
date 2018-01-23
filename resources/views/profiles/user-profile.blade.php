@@ -24,9 +24,16 @@
                             </p>
                         </div>
                         <div class="col-xs-12 col-sm-4">
-                            <button class="btn btn-success btn-block pull-right" style="margin-top: 20px">
-                                <span class="fa fa-plus-circle"></span> Follow
-                            </button>
+                            @if(Auth::id() != $user->id)
+                                <button class="btn btn-success btn-block pull-right" style="margin-top: 20px">
+                                    <span class="fa fa-plus-circle"></span> Follow
+                                </button>
+                            @else
+                                <a href="{{ route('user-profile.edit', $user->name) }}"
+                                   class="btn btn-danger btn-block pull-right" style="margin-top: 20px">
+                                    <span class="fa fa-plus-circle"></span> Edit profile
+                                </a>
+                            @endif
                         </div>
                     </div>
                     <div class="col-xs-12 divider text-center">

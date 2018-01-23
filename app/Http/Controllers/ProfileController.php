@@ -23,4 +23,10 @@ class ProfileController extends Controller
 
         return view('profiles.user-profile', compact('user'));
     }
+
+    public function edit($username)
+    {
+        dd($username);
+        $user = User::where('name', $username)->first();
+    }
 }
