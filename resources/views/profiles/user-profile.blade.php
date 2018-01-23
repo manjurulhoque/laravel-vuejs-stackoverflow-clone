@@ -12,7 +12,11 @@
                 <div class="well profile">
                     <div class="col-sm-12">
                         <div class="col-xs-12 col-sm-8">
-                            <h2>Nicole Pearson</h2>
+                            @if($user->profile->first_name && $user->profile->last_name)
+                                <h2>{{ $user->profile->first_name }} {{ $user->profile->last_name }}</h2>
+                            @else
+                                <h2>{{ $user->name }}</h2>
+                            @endif
                             <p><strong>About: </strong> Web Designer / UI. </p>
                             <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new
                                 things. </p>
