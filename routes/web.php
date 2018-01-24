@@ -19,6 +19,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('users/{username}', 'ProfileController@show')->name('user-profile');
+Route::get('profile', 'ProfileController@index');
 
 Route::group(['middleware' => 'auth'], function ($router) {
     Route::resource('questions', 'QuestionController');

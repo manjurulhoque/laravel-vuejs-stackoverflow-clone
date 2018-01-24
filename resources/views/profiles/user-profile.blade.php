@@ -20,11 +20,15 @@
                             <p><strong>About: </strong> Web Designer / UI. </p>
                             <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new
                                 things. </p>
-                            <p><strong>Skills: </strong>
-                                <span class="tags">html5</span>
-                                <span class="tags">css3</span>
-                                <span class="tags">jquery</span>
-                                <span class="tags">bootstrap3</span>
+                            <strong>Skills: </strong>
+                            <p>
+                                @if($user->profile->skills)
+                                    @foreach(explode(',', $user->profile->skills) as $skill)
+                                        <span class="tags">{{ $skill }}</span>
+                                    @endforeach
+                                @else
+                                    <h5>No skill</h5>
+                                @endif
                             </p>
                         </div>
                         <div class="col-xs-12 col-sm-4">

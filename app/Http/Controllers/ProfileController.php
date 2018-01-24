@@ -20,6 +20,13 @@ class ProfileController extends Controller
         $this->user = $user;
     }
 
+    public function index()
+    {
+        $myString = "9,admin@example.com,8";
+        $myArray = explode(',', $myString);
+        print_r($myArray);
+    }
+
     public function show($username)
     {
         $user = User::where('name', $username)->first();
@@ -47,13 +54,15 @@ class ProfileController extends Controller
                 'image' => 'images/covers/'.$filename,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
+                'skills' => $request->skills
             ]);
         } else {
             $user->profile()->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
+                'skills' => $request->skills
             ]);
         }
 
