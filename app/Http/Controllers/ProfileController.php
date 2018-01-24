@@ -27,9 +27,9 @@ class ProfileController extends Controller
         print_r($myArray);
     }
 
-    public function show($username)
+    public function show($slug)
     {
-        $user = User::where('name', $username)->first();
+        $user = User::where('slug', $slug)->first();
 
         return view('profiles.user-profile', compact('user'));
     }

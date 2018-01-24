@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
     Route::resource('replies', 'ReplyController');
 
     // profile
-    Route::get('users/{username}/edit', 'ProfileController@edit')->name('user-profile.edit');
+    Route::get('users/{slug}/edit', 'ProfileController@edit')->name('user-profile.edit');
     Route::put('users/{username}/update', 'ProfileController@update')->name('user-profile.update');
 
     // voting
