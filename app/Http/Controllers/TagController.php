@@ -54,7 +54,8 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
+        $questions = $this->tag::find($tag)->first()->questions;
+        return view('tags.show-tag-questions', compact('questions'));
     }
 
     /**
