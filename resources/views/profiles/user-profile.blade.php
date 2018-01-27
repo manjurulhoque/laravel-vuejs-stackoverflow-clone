@@ -17,6 +17,7 @@
                             @else
                                 <h2>{{ $user->name }}</h2>
                             @endif
+                            <p><strong>Reputation: </strong> {{ $user->profile->reputation }} </p>
                             <p><strong>About: </strong> Web Designer / UI. </p>
                             <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new
                                 things. </p>
