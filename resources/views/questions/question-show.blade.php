@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-2">
             <div class="col-md-2">
-                <show-question id="{{$question->id}}"></show-question>
+                <show-question id="{{$question->id}}" whom_question="{{ $question->user->id }}"></show-question>
             </div>
         </div>
         <div class="col-md-10">
@@ -30,18 +30,19 @@
                                                 <div class="user-action-time">
                                                     answered {{ $reply->updated_at->diffForHumans() }}
                                                 </div>
-                                                {{--<div class="user-gravatar32">--}}
-                                                    {{--<a href="/users/1461131/mersocarlin">--}}
-                                                        {{--<div class="gravatar-wrapper-32"><img--}}
-                                                                    {{--src="https://www.gravatar.com/avatar/9d345af079c0e2a554a586c6cad3c20c?s=32&amp;d=identicon&amp;r=PG"--}}
-                                                                    {{--alt="" width="32" height="32"></div>--}}
-                                                    {{--</a>--}}
-                                                {{--</div>--}}
+                                                <div class="user-gravatar32">
+                                                    <a href="#">
+                                                        <div class="gravatar-wrapper-32"><img
+                                                                    src="../{{ $reply->user->profile->image }}"
+                                                                    alt="" width="32" height="32"></div>
+                                                    </a>
+                                                </div>
                                                 <div class="user-details">
                                                     <a href="#">{{ $reply->user->name }}</a>
-                                                    {{--<div class="-flair">--}}
-                                                        {{--<span class="reputation-score" title="reputation score "--}}
-                                                              {{--dir="ltr">3,835</span><span title="1 gold badge"><span--}}
+                                                    <div class="-flair">
+                                                        <span class="reputation-score" title="reputation score "
+                                                              dir="ltr">{{ $reply->user->profile->reputation }}</span>
+                                                        {{--<span title="1 gold badge"><span--}}
                                                                     {{--class="badge1"></span><span--}}
                                                                     {{--class="badgecount">1</span></span><span--}}
                                                                 {{--title="8 silver badges"><span--}}
@@ -50,7 +51,7 @@
                                                                 {{--title="26 bronze badges"><span--}}
                                                                     {{--class="badge3"></span><span--}}
                                                                     {{--class="badgecount">26</span></span>--}}
-                                                    {{--</div>--}}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>

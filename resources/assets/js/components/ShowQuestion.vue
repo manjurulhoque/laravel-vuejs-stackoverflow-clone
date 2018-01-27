@@ -23,7 +23,7 @@
 <script>
     import axios from 'axios';
     export default {
-        props: ['id'],
+        props: ['id', 'whom_question'],
         data() {
             return {
                 upvoted: false,
@@ -38,8 +38,9 @@
         methods: {
             upvote() {
                 this.favorited = true;
-                axios.post(`/upvote`, {question_id: this.id})
+                axios.post(`/upvote`, {question_id: this.id, whom_question: this.whom_question})
                     .then(res => {
+                        console.log(res);
                         if (this.downvoted === true) {
                             this.downvoted = false;
                         }
@@ -52,7 +53,7 @@
             downvote() {
                 this.favorited = true;
                 console.log(`downvote`);
-                axios.post(`/downvote`, {question_id: this.id})
+                axios.post(`/downvote`, {question_id: this.id, whom_question: this.whom_question})
                     .then(res => {
                         if (this.upvoted === true) {
                             this.upvoted = false;

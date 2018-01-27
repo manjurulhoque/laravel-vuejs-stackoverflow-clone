@@ -76,6 +76,11 @@
     white-space: nowrap;
 }
 
+.gravatar-wrapper-32, .gravatar-wrapper-32 img {
+    width: 32px;
+    height: 32px;
+}
+
 .user-details {
     line-height: 17px;
     word-wrap: break-word;
