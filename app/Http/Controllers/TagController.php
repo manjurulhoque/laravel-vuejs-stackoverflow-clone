@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    private $tag;
+
+    function __construct(Tag $tag)
+    {
+        $this->tag = $tag;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = $this->tag::all();
+        return view('tags.show-all-tags', compact('tags'));
     }
 
     /**

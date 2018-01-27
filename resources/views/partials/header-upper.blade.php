@@ -10,7 +10,7 @@
         <div class="navbar-form navbar-right">
             <button class="btn btn-link">
                 <a href="#" class="btn btn-default active" role="button">Questions</a>
-                <a href="#" class="btn btn-default active" role="button">Tags</a>
+                <a href="{{ route('tags') }}" class="btn btn-default active" role="button">Tags</a>
                 <a href="#" class="btn btn-default active" role="button">Users</a>
                 <a href="#" class="btn btn-default active" role="button">Badges</a>
                 <a href="#" class="btn btn-default active" role="button">Unanswered</a>
