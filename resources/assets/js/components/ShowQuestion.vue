@@ -8,13 +8,14 @@
                    class="upvote up" title="This is good stuff. Vote it up! (Click again to undo)">
 
                 </a>
-                <span class="count" id="count" name="vote">&nbsp;33</span>
+                <span class="count" id="count" name="vote">&nbsp; 0</span>
                 <a @click="downvote" :class="{downvoted: downvoted}" class="downvote"
                    title="This is not useful. Vote it down. (Click again to undo)">
                 </a>
                 <a class="star" :class="{starred: favorited}" @click="starred"
                    title="Mark as favorite. (Click again to undo)">
                 </a>
+                <h4>{{total_star}} stars</h4>
             </div>
         </form>
     </div>
@@ -23,7 +24,7 @@
 <script>
     import axios from 'axios';
     export default {
-        props: ['id', 'whom_question'],
+        props: ['id', 'whom_question', 'total_star'],
         data() {
             return {
                 upvoted: false,
@@ -40,7 +41,6 @@
                 this.favorited = true;
                 axios.post(`/upvote`, {question_id: this.id, whom_question: this.whom_question})
                     .then(res => {
-                        console.log(res);
                         if (this.downvoted === true) {
                             this.downvoted = false;
                         }

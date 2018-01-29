@@ -43200,10 +43200,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['id', 'whom_question'],
+    props: ['id', 'whom_question', 'total_star'],
     data: function data() {
         return {
             upvoted: false,
@@ -43222,7 +43223,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.favorited = true;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/upvote', { question_id: this.id, whom_question: this.whom_question }).then(function (res) {
-                console.log(res);
                 if (_this.downvoted === true) {
                     _this.downvoted = false;
                 }
@@ -43330,7 +43330,7 @@ var render = function() {
         _c(
           "span",
           { staticClass: "count", attrs: { id: "count", name: "vote" } },
-          [_vm._v(" 33")]
+          [_vm._v("  0")]
         ),
         _vm._v(" "),
         _c("a", {
@@ -43347,7 +43347,9 @@ var render = function() {
           class: { starred: _vm.favorited },
           attrs: { title: "Mark as favorite. (Click again to undo)" },
           on: { click: _vm.starred }
-        })
+        }),
+        _vm._v(" "),
+        _c("h4", [_vm._v(_vm._s(_vm.total_star) + " stars")])
       ])
     ])
   ])

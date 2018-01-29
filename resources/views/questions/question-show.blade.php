@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-2">
             <div class="col-md-2">
-                <show-question id="{{$question->id}}" whom_question="{{ $question->user->id }}"></show-question>
+                <show-question total_star="{{ $question->getTotalStars()->count() }}" id="{{$question->id}}" whom_question="{{ $question->user->id }}"></show-question>
             </div>
         </div>
         <div class="col-md-10">
@@ -82,6 +82,7 @@
     <script src="{{ asset('js/jquery-2.2.3.js') }}"></script>
     <script src="{{ asset('js/jquery.upvote.js') }}"></script>
     <script>
-        $('#topic').upvote();
+        let count = {!! $question->vote !!}
+        $('#topic').upvote({count: count});
     </script>
 @endsection

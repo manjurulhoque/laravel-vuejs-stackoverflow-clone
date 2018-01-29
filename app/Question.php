@@ -14,6 +14,13 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getTotalStars()
+    {
+        return $this->hasMany(Vote::class)
+            ->where('question_id',$this->id)
+            ->where('favorite', 1);
+    }
+
     public function votes()
     {
         return $this->hasMany(Vote::class);

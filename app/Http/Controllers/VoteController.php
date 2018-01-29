@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Question;
 use App\User;
 use App\Vote;
 use Illuminate\Http\Request;
@@ -11,16 +12,22 @@ class VoteController extends Controller
 {
     private $vote;
     private $user;
-    function __construct(Vote $vote, User $user)
+    private $question;
+
+    function __construct(Vote $vote, User $user, Question $question)
     {
         $this->vote = $vote;
         $this->user = $user;
+        $this->question = $question;
     }
 
     public function upvote(Request $request)
     {
         $v = $this->vote::where('question_id', $request->question_id)
             ->where('user_id', Auth::id())->first();
+        $q = $this->question::find($request->question_id);
+        $q->vote += 1;
+        $q->save();
         $user = $this->user::find($request->whom_question);
         $profile = $user->profile;
         $profile->reputation += 10;
@@ -45,6 +52,11 @@ class VoteController extends Controller
     {
         $v = $this->vote::where('question_id', $request->question_id)
             ->where('user_id', Auth::id())->first();
+
+        $q = $this->question::find($request->question_id);
+        $q->vote -= 1;
+        $q->save();
+
         $user = $this->user::find($request->whom_question);
         $profile = $user->profile;
         $profile->reputation -= 10;
